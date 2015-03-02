@@ -71,6 +71,19 @@ mv $build_dir/node-v$node_version-linux-x64 $build_dir/vendor/node
 chmod +x $build_dir/vendor/node/bin/*
 PATH=$build_dir/vendor/node/bin:$PATH
 
+#install sass
+gem install sass
+
+# make it executable & add it to the PATH
+chmod +x /app/vendor/ruby-1.9.2/bin/*
+PATH=/app/vendor/ruby-1.9.2/bin:$PATH
+
+status "`sass -v` installed"
+
+#install grunt
+npm install -g grunt-cli
+info "`grunt --version`"
+
 # Run subsequent node/npm commands from the build path
 cd $build_dir
 
@@ -150,3 +163,5 @@ fi
 status "Building runtime environment"
 mkdir -p $build_dir/.profile.d
 echo "export PATH=\"\$HOME/vendor/node/bin:\$HOME/bin:\$HOME/node_modules/.bin:\$PATH\";" > $build_dir/.profile.d/nodejs.sh
+
+grunt build:dist
